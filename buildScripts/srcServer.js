@@ -21,6 +21,13 @@ app.use(require("webpack-dev-middleware") (compiler, {
   publicPath: config.output.publicPath
 }));
 
+app.get('/users', (req, res) => {
+  res.json([
+    {"id":1, "firstName":"toto", "lastName":"bobo", "email":"ok@gmail.com"},
+    {"id":2, "firstName":"coco", "lastName":"lolo", "email":"ok2@gmail.com"},
+  ]);
+});
+
 /* tell express which routes it should handle */
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, "../src/index.html"));

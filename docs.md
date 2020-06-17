@@ -165,3 +165,14 @@
         * add .travis.yml in your root
     * appveyor is the same as travisci
         * we add appveyor.yml in the root
+
+14. HTTP calls
+    * node: http request
+    * browser: xmlhttprequest, jquery, framework based, fetch
+    * node and browser: isomorphic-fetch, xhr, superagent, axios
+    * why centralize api calls:
+        * configure all calls
+        * handle preloader logic
+        * handle errors
+    * setup fetch
+        * we go in the buildScripts directory and use get
