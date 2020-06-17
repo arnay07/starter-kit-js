@@ -163,3 +163,5 @@
         * sign in with your github account
         * choose the repository to use
         * add .travis.yml in your root
+    * appveyor is the same as travisci
+        * we add appveyor.yml in the root
