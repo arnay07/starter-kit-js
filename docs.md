@@ -73,8 +73,13 @@
 9. Bundling
    * use es6 modules
        * select a bundler
-       * require js
-       * browserify original, bundle npm packages for the web
-       * webpack can handle much more than just js, built-in hot reload
-       * rollup tree shaking, reduce the weight of the bundle, quite new
-       * jspm system js used, universal module loader
+           * require js
+           * browserify original, bundle npm packages for the web
+           * webpack can handle much more than just js, built-in hot reload
+           * rollup tree shaking, reduce the weight of the bundle, quite new
+           * jspm system js used, universal module loader
+   * configure webpack
+       * webpack.config.js at the root
+       * dev mode: webpack.config.dev.js
+       * we then configure express to serve our bundle
+       * we go in srcServer.js, import webpack and our webpack config file
