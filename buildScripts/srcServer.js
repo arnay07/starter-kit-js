@@ -4,6 +4,9 @@ import open from "open";
 import webpack from "webpack";
 import config from "../webpack.config.dev";
 
+
+/* eslint-disable no-console */
+
 /*we choose a port for our server*/
 const port = 3000;
 

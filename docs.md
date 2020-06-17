@@ -83,3 +83,83 @@
        * dev mode: webpack.config.dev.js
        * we then configure express to serve our bundle
        * we go in srcServer.js, import webpack and our webpack config file
+       * to add a file to our bundle we need to add a line importing the file
+       * in index.js the entry point of our bundler.js
+       * the code will be transpiled in es5
+
+10. how to debug the transpiled code: sourcemaps
+    * make use see the source code of in es6 in the console
+    * there are multiple kind of sourcemaps: in this demo we use inline-source-map
+    * we write the word "debugger" where we want our breakpoint to be
+
+11. Linting
+    * use for consistency, avoiding mistakes
+    * linters:
+        * jslint
+        * jshint
+        * eslint (recommended)
+    * configuring eslint:
+        * config format: eslintrc or package.json
+    * choosing between warnings and errors: warnings don't break the build but errors do
+    * which plugins ? to enhance eslint (for react, angular, etc)
+    * eslint standard rules to not start from scratch
+    * eslint doesn't watch files on save: use eslint-watch
+    * eslint doesn't support experimental features: use babel-eslint
+    * why eslint in build process:
+        * one place to check
+        * protects the integration to not accept linting error
+    * in package.json we're going to add "lint" script
+    * eslint-watch so we have to specify it in package.json
+    * lint:watch make the eslint run send info to eslint-watch
+
+12. Testing
+    * unit testing: testing one thing
+        * frameworks:
+          * mocha (recommended)
+          * jasmine
+          * tape
+          * qunit
+          * ava
+          * jest (for react)
+    * integration testing
+    * ui testing
+    * jest come with assertion built in, mocha on the other hand doesnt have it
+        * assert(2+2).equal(4)
+        * on mocha we'll use chai for assertions
+    * helper library
+        * simulate the dom
+        * run dom-related test without browser
+    * where to run our test
+        * headless browser: without user interface
+            * phantomjs (ok)
+        * browser
+            * karma, testem
+        * in memory dom:
+            * jsdom (ok)
+    * where to put the tests
+        * under the file to test
+    * running tests each time you hit save
+    * unit test vs integration test
+        * test a small unit vs test multiples units
+        * often single function vs involves opening the browser, clicking on ui, etc.
+        * fast vs slow
+        * run on save vs run on demand
+    * we setup our tests with testSetup in buildScripts
+    * we add the script in package.json
+    * and we add file.test.js or .spec.js to the files in src
+
+13. Continuous integration
+    * not breaking the build process
+    * catches mistakes quickly
+    * ci server:
+        * run automated builds
+        * runs tests
+        * automate deployment
+    * ci servers:
+        * travis ci: hosted, runs on linux
+        * jenkins: hosted by ourselves
+        * appveyor: windows
+    * travis-ci:
+        * sign in with your github account
+        * choose the repository to use
+        * add .travis.yml in your root
