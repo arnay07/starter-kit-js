@@ -1,5 +1,51 @@
 # text to explain the different tech one can use
 
+* starterKit is a automated checklist. We can't remember all the steps so we need a checklist of what to do.
+development environment is important for better dev
+
+Boilerplate is good for saving time
+
+```javascript
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+bit.ly/jsdevpackagejson
+
+browsersync
+
+var express = require('express');
+var path = require('path');
+var open = require('open');
+
+var port = 3000;\nvar app = express();
+
+app.get('/', function(req, res) {
+       res.sendFile(path.join(__dirname, '../src/index.html));
+       };
+       app.listen(port , function(err) {
+             if (err) {
+                       console.log(err);}
+                 else{
+                            open('http://localhost:' + port);
+                            }
+```
+
+* chalk helps me to display the color of the thing you are displaying
+* if in the json scripts i put pre before the name for example prestart will start before start and poststart will start after start it is a convention.
+* npm start -s will silence the noise
+* transpilers   configuration:
+  * you can use either .babelrc  or package.json but the easiest is package.json
+  * ES5 or ES6 or transpiled build script.
+
 1. Editor config
     * by including the file .editorconfig we can specify how we want our
         editor to behave
@@ -266,3 +312,109 @@
     * we then change baseUrl in src/api
     * after that we can start the app
     * if we want to see the mockapi in use we add `?useMockApi=true` to the url
+    * In order to automate the build process:
+        * we are going to add scripts in package.json
+        * we add:
+            * clean-dist: rimraf (remove directory)
+            * prebuild
+            * build
+            * postbuild
+    * we would like to reference bundle automatically
+    * handle dynamic bundle names
+        * we can hard code the bundle js name in html
+        * or we can dynamically inject it with node
+        * html-webpack-plugin
+            * will dynamically inject index.html to our dist
+            * we delete bundle.js src in index.html as the plugin will take care of that
+            * since we are using the plugin to generate index.html we can minify it
+                * we ad d minify attribute in the plugin
+    * inject production only resources
+    * as we build big apps we may need to make multiple js files instead of one:
+        * bundle splitting with webpack (we can use other techniques)
+            * speed initial load page
+            * avoid reloading all libraries
+            * the idea is that if we use third party libraries and we change our
+            * code we need to use the same cached library code and not reload it
+                * to do that we need to go in entry array in webpack config prod
+                * and add other elements
+                * we added vendor and created vendor.js in src which contains
+                * an import from a third party and we add a new plugin
+                * commonsChunckPlugin to our plugins in webpack config prod
+                * commonChunk will see that fetch was imported in vendor.js
+                * and will not import it in main.js
+                * placeholder in output
+        * Cache busting
+            * to save bandwith and avoid unnecessary http request
+                * configure webserver js bundle doesn't expire for a year
+                * once user load our js bundle it will not be called
+                * force request for latest version
+                * change bundle filename so that it will be load when changed
+                * we change the output also in webpack config we add `[chunkname]` on `[name].js`
+            * our css is generated in our js bundle but we want to have a separate css file in prod
+                * we import extracttextPlugin
+                * we add it in the plugins
+                * we change the css loader at the end of the file
+        * Error logging
+            * Trackjs (recommended)
+            * sentry
+            * new relic
+            * raygun
+                * good error metadata
+                * notifications & integrations
+                * analytics and filtering
+                * pricing
+            * we go to trackjs and create an account and paste code in the head of index.html
+            * we can then write the demo on the site to see error
+            * we go on the site to see the error on trackjs
+            * we want to run trackjs in prod only because it is useless in dev mode as we want to see errors from users of our site
+                * we are going to add conditions so that the trackjs go ony in index.html in production
+                * we gonna user ejs loader (embededjs.com)
+                * under inject in HtmlWebpackPlugin
+                * we then go in the index.html for the conditional statement
+                * the html become a ejs file but we can keep the html extension
+
+18. Production deploy
+    * separate the ui from the api
+    * we are going to deplog api to heroku and ui to surge (github, netlify, github) for static files
+        * for heroku we have a js-env-demo-api that contains
+            * cors: allows cross platform calls from different domains
+            * url must be updated to mine
+            * procfile tells heroku what to run
+            * we then do
+                * `heroku login`
+                * `heroku create` this prepare our app to be deploy
+                * `heroku git:remote -a polar-stream-10977`
+                * `git push heroku master` push code to heroku
+        * let's go in baseUrl.js for ui and add heroku url don't forget the / at the end of url
+        * we go in distServer.js and delete json data
+    * The path to production:
+      * npm start: development
+      * npm run build: production build
+      * npm run deploy: production deploy
+          * surge is for static front end
+          * surge is already in package.json so no need to install it
+          * npm run deploy (`http://paltry-level.surge.sh/`)
+          * we can change the name to a custom domain with free surge
+      * update approaches
+          * yeoman
+              * generator for startkit
+              * commit
+              * scaffoldover the existing project
+              * resolve conflicts manually
+          * github
+              * host on github
+              * fork starterkit
+              * pull from master
+          * npm
+              * encapsulatekit in npm package
+              * update package to receive latest
+      * inspiration
+          * react: `andrewhfarmer.com/starter-project/`
+          * angular: `github.com/gianarb/awesome-angularjs`
+          * for more:
+              * search `name of framework +
+                  * development environment
+                  * boilerplate
+                  * starter kit
+                  * starter project
+                  * seed
