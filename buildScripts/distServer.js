@@ -16,12 +16,14 @@ const app = express();
 app.use(compression());
 app.use(express.static('dist'));
 
+/* our api is now on heroku so no need to have these lines
 app.get('/users', (req, res) => {
   res.json([
     {"id":1, "firstName":"toto", "lastName":"bobo", "email":"ok@gmail.com"},
     {"id":2, "firstName":"coco", "lastName":"lolo", "email":"ok2@gmail.com"},
   ]);
 });
+*/
 
 /* tell express which routes it should handle */
 app.get('/', function(req, res) {
