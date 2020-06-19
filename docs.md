@@ -163,7 +163,7 @@
         * sign in with your github account
         * choose the repository to use
         * add .travis.yml in your root
-    * appveyor is the same as travisci
+    * appveyor is the same as travis-ci
         * we add appveyor.yml in the root
 
 14. HTTP calls
@@ -176,3 +176,93 @@
         * handle errors
     * setup fetch
         * we go in the buildScripts directory and use get
+
+15. mocking http
+    * unit testing
+    * instant response
+    * rapid prototype
+    * work offline
+    * Nock
+    * static json: can't change data
+    * create dev webserver
+        * api-mock
+        * json server: can change data
+        * json schema faker
+
+    * mock api makes working with fake data easy
+
+    * Our plan for mocking api
+        1. Declare our schema:
+              * json schema faker (json-schema.org) use the repl online to learn how
+              * the generated data looks like
+        2. Generate random data:
+              * faker.js
+              * chance.js
+              * randexp.js
+        3. Serve data via api
+              * json server
+    * Demo
+        * we create a mock data schema where we define the kind of data we want
+        * we then make it that generate the data from generateMockData that will
+        * go in src/api/db.json
+        * we then write a script in package.json to start our mock api server
+        * we need to generate new data each time we start our app so we can test edge cases
+        * we need to tell our app to ask the mock api for data
+        * we create the baseUrl.js in the src/api directory so that the app knows
+          * if we are in development or prod
+        * we create baseUrl to define whether we are in dev mode or prod and we change
+          * userApi to take that into account
+        * we can even manipulate data: deleting and adding records
+        * we change userApi to add functionality for deleting
+        * we go in index.js for ui change
+        * Summary
+            * node: http, request
+            * browser: xhr, fetch, jquery
+            * node and browser: isomorphic fetch, xhr, superAgent, axios
+            * mocking http calls:
+                * nock, hard coded json
+                * custom webserver: json-server, json schema faker, express, browserSync
+
+16. Project structure
+    * why a demo app?
+        * some people learn by example
+        * framework usage
+        * testing
+        * mock api
+        * automated deployment
+        * coding standards
+        * interactive example that shows how everything work
+    * project structure tips
+        * js belongs in a .js file
+        * pull data from database and use it in your js
+        * don't generate js code, generate json used by js
+        * organize by feature instead of type (mvc)
+        * extract logic in plain old javascript (pojos)
+            * no framework specific logic
+            * if you can use js for logic for you can change the framework you use
+            * down the line
+            * pure js logic easy to test functions avoid putting logic in framework specific files
+
+17. Production build
+    * Minification
+        * shortens variable and functions names
+        * removes comments
+        * remove whitespaces and new lines
+        * dead code elimination/tree-shaking
+        * debug via sourcemaps
+    * lets make a copy of webpack.config.dev.js
+        * lets change devtool to source-map
+        * we change the output path to dist(distribution)
+        * we are going to add plugins
+            * uglifyjs
+            * dedubplugin
+    * we then create build.js in buildScripts directory
+    * lets create distServer that show us locally the app that we gonna have in prod
+        * we copy what is in srcServer and change a few things
+        * remove webpack
+        * add support to express for support of static files
+        * we add compression (jsup??)
+
+    * we then change baseUrl in src/api
+    * after that we can start the app
+    * if we want to see the mockapi in use we add `?useMockApi=true` to the url
